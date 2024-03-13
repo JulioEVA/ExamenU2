@@ -8,94 +8,51 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 
 class Principal : AppCompatActivity() {
 
-    var detallesAdapter: DetallesAdapter? = null
-
-    var productos = ArrayList<Detalles>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
 
-        var menuOption: String? = intent.getStringExtra("menuType")
-        agregarProductos(menuOption)
+        var btnDetalles: Button = findViewById(R.id.btnDetalles) as Button
+        var btnGlobos: Button = findViewById(R.id.btnGlobos) as Button
+        var btnPeluches: Button = findViewById(R.id.btnPeluches) as Button
+        var btnRegalos: Button = findViewById(R.id.btnRegalos) as Button
+        var btnTazas: Button = findViewById(R.id.btnTazas) as Button
 
-        var listView: ListView = findViewById(R.id.listView) as ListView
-
-        var adaptador : AdaptadorProductos = AdaptadorProductos(this, menu)
-        listView.adapter = adaptador
-    }
-
-    fun agregarProductos(option: String?){
-
-        var tv: TextView = findViewById(R.id.tv_detalles)
-
-        when(option){
-            "Detalles"->{
-                tv.text = "Detalles"
-            }
-
-            "Globos"->{
-                tv.text = "Globos"
-            }
-
-            "Peluches"->{
-                tv.text = "Peluches"
-            }
-
-            "Regalos"->{
-                tv.text = "Regalos"
-            }
-
-            "Tazas"->{
-                tv.text = "Tazas"
-            }
-
+        btnDetalles.setOnClickListener {
+            var intent : Intent = Intent(this, Regalos::class.java)
+            intent.putExtra("menuType", "Detalles")
+            startActivity(intent)
         }
-}
 
-class DetallesAdapter: BaseAdapter {
-    var detalles = ArrayList<Detalles>()
-    var context: Context? = null
-
-    constructor(context: Context, peliculas: ArrayList<Detalles>) : super(){
-        this.detalles = peliculas
-        this.context = context
-    }
-
-    override fun getCount(): Int {
-        return detalles.size
-    }
-
-    override fun getItem(position: Int): Any {
-        return detalles[position]
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getView(pe: Int, p1: View?, p2: ViewGroup?): View {
-        var detalle = detalles[pe]
-        var inflator = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var vista = inflator.inflate(R.layout.activity_detalle_regalos, null)
-        var image: ImageView = vista.findViewById(R.id.iv_regalo_imagen)
-        var title: TextView = vista.findViewById(R.id.tv_regalo_precio)
-
-        image.setImageResource(detalle.image)
-        title.setText(detalle.precio)
-
-        image.setOnClickListener(){
-            val intento = Intent(context, DetalleRegalos::class.java)
-            intento.putExtra("precio", detalle.precio)
-            intento.putExtra("imagen", detalle.image)
-            context!!.startActivity(intento)
+        btnGlobos.setOnClickListener {
+            var intent : Intent = Intent(this, Regalos::class.java)
+            intent.putExtra("menuType", "Globos")
+            startActivity(intent)
         }
-        return vista
+
+        btnPeluches.setOnClickListener {
+            var intent : Intent = Intent(this, Regalos::class.java)
+            intent.putExtra("menuType", "Peluches")
+            startActivity(intent)
+        }
+
+        btnRegalos.setOnClickListener {
+            var intent : Intent = Intent(this, Regalos::class.java)
+            intent.putExtra("menuType", "Regalos")
+            startActivity(intent)
+        }
+
+        btnTazas.setOnClickListener {
+            var intent : Intent = Intent(this, Regalos::class.java)
+            intent.putExtra("menuType", "Tazas")
+            startActivity(intent)
+        }
     }
 }
